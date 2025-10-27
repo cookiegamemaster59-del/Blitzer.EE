@@ -1,30 +1,11 @@
-<!DOCTYPE html>
-
-<html lang="de"><head>
-<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Blitzer.EE – Download</title>
-<link href="manifest.webmanifest" rel="manifest"/>
-<meta content="#0f1222" name="theme-color"/>
-<link href="icons/app-192.png" rel="apple-touch-icon"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-<style>body{margin:0;font:16px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0f1222;color:#eef1ff;padding:24px} .card{max-width:800px;margin:0 auto;background:#111827;border:1px solid rgba(255,255,255,.08);border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.45);padding:20px} h1{margin-top:0} .section{margin:18px 0;padding:16px;border-radius:12px;background:#0b1020;border:1px solid rgba(255,255,255,.06)} .btn{display:inline-block;background:#6c5ce7;color:#fff;border:none;border-radius:999px;padding:10px 16px;font-weight:700;text-decoration:none} code{background:#0b1020;border:1px solid rgba(255,255,255,.08);padding:2px 6px;border-radius:6px}</style>
+<!DOCTYPE html><html lang="de"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blitzer.EE – Downloads</title>
+<style>body{margin:0;display:grid;place-items:center;min-height:100vh;background:#0f1222;color:#eef1ff;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif} .card{background:#111827;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:14px;box-shadow:0 16px 36px rgba(0,0,0,.45);text-align:center;max-width:560px} .btn{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:999px;background:#6c5ce7;color:#fff;text-decoration:none}</style>
 </head><body>
-<div class="card">
-<h1>Blitzer.EE installieren</h1>
-
-
-
-
-
-<div class="section"><h3>Android – Als App installieren</h3><p>Empfohlen: Installiere die Website als App (PWA). Tippe unten auf „App installieren“. Falls der Button nicht erscheint, öffne die Seite in Chrome und wähle „Zum Startbildschirm hinzufügen“.</p><button class="btn" id="installBtn">App installieren</button></div><div class="section"><h3>iOS – Zum Home‑Bildschirm</h3><p>Safari → Teilen (⤴) → Zum Home‑Bildschirm. iOS erlaubt keine direkten App‑Downloads außerhalb des App Stores.</p></div><div class="section"><h3>Windows – Paket herunterladen</h3><p>Lade das Windows‑Paket herunter und folge der Anleitung im Archiv.</p><a class="btn" href="downloads/windows-package.zip">Windows Paket herunterladen</a></div><p><a class="btn" href="index.html">Zurück zur App</a></p></div>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}</script>
-<script>
-(function(){
-  let deferred; const btn=document.getElementById('installBtn');
-  function show(){ if(btn) btn.style.display='inline-block'; }
-  function hide(){ if(btn) btn.style.display='none'; }
-  hide();
-  window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferred=e; show(); btn.addEventListener('click', async ()=>{ hide(); if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; }, { once:true }); });
-})();
-</script></body></html>
+  <div class="card">
+    <h1>Downloads vorerst deaktiviert</h1>
+    <p>Die App-Downloads sind vorübergehend abgeschaltet. Bitte nutze die Web‑App.</p>
+    <a class="btn" href="index.html">Zurück zur App</a>
+  </div>
+</body></html>
