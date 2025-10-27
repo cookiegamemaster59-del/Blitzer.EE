@@ -12,23 +12,19 @@
 </head><body>
 <div class="card">
 <h1>Blitzer.EE installieren</h1>
-<div class="section">
-<h3>Android</h3>
-<p>Öffne die Website in Chrome. Wenn „App installieren“ angezeigt wird, tippe darauf, sonst öffne das Menü (⋮) und wähle <b>Zum Startbildschirm hinzufügen</b>.</p>
-<a class="btn" href="https://github.com/cookiegamemaster59-del/Blitzer.EE/releases">Zu den Releases (APK)</a><p>Direkter APK-Link (erscheint, sobald Build fertig): <a href="https://github.com/cookiegamemaster59-del/Blitzer.EE/releases/latest/download/blitzer-ee-android.apk">blitzer-ee-android.apk</a></p></div>
-<div class="section">
-<h3>iOS (iPhone/iPad)</h3>
-<p>Öffne die Website in Safari, tippe auf <b>Teilen</b> (⤴) und wähle <b>Zum Home-Bildschirm</b>.</p>
-</div>
-<div class="section">
-<h3>Windows/macOS (PC)</h3>
-<p>In Chrome oder Edge: Klicke in der Adresszeile auf <b>Installieren</b> (Monitor mit Pfeil). Alternativ im Menü: <b>App installieren</b>.</p>
-<p>Direkter Windows-Link (erscheint nach Build): </p><a class="btn" href="downloads/windows-package.zip">Windows Paket herunterladen (direkt)</a><p>Alternativ: <a href="https://github.com/cookiegamemaster59-del/Blitzer.EE/releases/latest">zu den Releases</a></p></div>
-<div class="section">
-<h3>App Stores</h3>
-<p>Optional kann ich Store-Pakete bauen: Android (Trusted Web Activity), iOS (Capacitor) und Windows Store (PWA-Package). Sag Bescheid.</p>
-</div>
-<p><a class="btn" href="index.html">Zurück zur Karte</a></p>
-<p>Hinweis: Falls der direkte Download noch 404 zeigt, bitte auf "Zu den Releases" klicken – die Dateien erscheinen, sobald der Build fertig ist.</p></div>
+
+
+
+
+
+<div class="section"><h3>Android – Als App installieren</h3><p>Empfohlen: Installiere die Website als App (PWA). Tippe unten auf „App installieren“. Falls der Button nicht erscheint, öffne die Seite in Chrome und wähle „Zum Startbildschirm hinzufügen“.</p><button class="btn" id="installBtn">App installieren</button></div><div class="section"><h3>iOS – Zum Home‑Bildschirm</h3><p>Safari → Teilen (⤴) → Zum Home‑Bildschirm. iOS erlaubt keine direkten App‑Downloads außerhalb des App Stores.</p></div><div class="section"><h3>Windows – Paket herunterladen</h3><p>Lade das Windows‑Paket herunter und folge der Anleitung im Archiv.</p><a class="btn" href="downloads/windows-package.zip">Windows Paket herunterladen</a></div><p><a class="btn" href="index.html">Zurück zur App</a></p></div>
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js').catch(()=>{});}</script>
-</body></html>
+<script>
+(function(){
+  let deferred; const btn=document.getElementById('installBtn');
+  function show(){ if(btn) btn.style.display='inline-block'; }
+  function hide(){ if(btn) btn.style.display='none'; }
+  hide();
+  window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferred=e; show(); btn.addEventListener('click', async ()=>{ hide(); if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; }, { once:true }); });
+})();
+</script></body></html>
