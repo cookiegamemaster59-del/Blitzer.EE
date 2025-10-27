@@ -3,16 +3,21 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build-windows:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Ensure curl
+        run: sudo apt-get update && sudo apt-get install -y curl
       - name: Package with PWABuilder (Windows)
+        env:
+          SITE_URL: https://raw.githack.com/cookiegamemaster59-del/Blitzer.EE/gh-pages/index.html
         run: |
-          URL="https://cookiegamemaster59-del.github.io/Blitzer.EE/"
-          curl -L "https://www.pwabuilder.com/api/windows?site=${URL}" -o windows-package.zip
+          curl -L "https://www.pwabuilder.com/api/windows?site=${SITE_URL}" -o windows-package.zip
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:

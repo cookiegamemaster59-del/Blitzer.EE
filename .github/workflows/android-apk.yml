@@ -3,6 +3,8 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   build-android:
     runs-on: ubuntu-latest
@@ -14,16 +16,20 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Install unzip and curl
+        run: sudo apt-get update && sudo apt-get install -y unzip curl
       - name: Download Android project (PWABuilder)
+        env:
+          SITE_URL: https://raw.githack.com/cookiegamemaster59-del/Blitzer.EE/gh-pages/index.html
         run: |
-          URL="https://cookiegamemaster59-del.github.io/Blitzer.EE/"
-          curl -L "https://www.pwabuilder.com/api/android?site=${URL}" -o android-project.zip
+          curl -L "https://www.pwabuilder.com/api/android?site=${SITE_URL}" -o android-project.zip
           unzip -q android-project.zip -d android_src
       - name: Locate gradlew
         id: locate
         run: |
           set -e
-          GRADLEW=$(cd android_src && find . -maxdepth 3 -name gradlew | head -n1)
+          cd android_src
+          GRADLEW=$(find . -maxdepth 4 -name gradlew | head -n1)
           if [ -z "$GRADLEW" ]; then echo "No gradlew found"; exit 1; fi
           echo "gradlew_path=android_src/${GRADLEW#./}" >> $GITHUB_OUTPUT
           echo "gradle_dir=android_src/$(dirname ${GRADLEW#./})" >> $GITHUB_OUTPUT
@@ -31,9 +37,10 @@ jobs:
         run: |
           chmod +x "${{ steps.locate.outputs.gradle_dir }}/gradlew"
           cd "${{ steps.locate.outputs.gradle_dir }}"
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleDebug --no-daemon --stacktrace
           mkdir -p "$GITHUB_WORKSPACE/out"
           APK=$(find . -path '*/outputs/apk/debug/*.apk' -type f | head -n1)
+          if [ -z "$APK" ]; then echo "APK not found"; exit 1; fi
           cp "$APK" "$GITHUB_WORKSPACE/out/blitzer-ee-android.apk"
       - name: Create GitHub Release (Android APK)
         uses: softprops/action-gh-release@v2
