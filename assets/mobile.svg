@@ -1,0 +1,17 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='128' height='128' viewBox='0 0 128 128'>
+  <defs>
+    <linearGradient id='g' x1='0' x2='1'>
+      <stop offset='0' stop-color='#ffffff' stop-opacity='0.95'/>
+      <stop offset='1' stop-color='#e6e6e6' stop-opacity='0.95'/>
+    </linearGradient>
+  </defs>
+  <!-- Mobile speed camera on tripod -->
+  <rect x='20' y='20' rx='10' ry='10' width='88' height='44' fill='url(#g)' stroke='#111' stroke-width='4'/>
+  <circle cx='48' cy='42' r='12' fill='#111'/>
+  <circle cx='48' cy='42' r='6' fill='#09c'/>
+  <rect x='70' y='34' width='24' height='16' rx='4' fill='#111'/>
+  <rect x='24' y='66' width='80' height='6' rx='3' fill='#111' opacity='0.7'/>
+  <path d='M64 72 L36 120' stroke='#111' stroke-width='6' stroke-linecap='round'/>
+  <path d='M64 72 L92 120' stroke='#111' stroke-width='6' stroke-linecap='round'/>
+  <path d='M64 72 L64 120' stroke='#111' stroke-width='6' stroke-linecap='round'/>
+</svg>
