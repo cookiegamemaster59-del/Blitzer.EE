@@ -1,0 +1,26 @@
+name: Build Windows package
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build-windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Package with PWABuilder (Windows)
+        run: |
+          URL="https://cookiegamemaster59-del.github.io/Blitzer.EE/"
+          curl -L "https://www.pwabuilder.com/api/windows?site=${URL}" -o windows-package.zip
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: windows-${{ github.run_id }}
+          name: Windows Package ${{ github.run_id }}
+          draft: false
+          prerelease: false
+          files: |
+            windows-package.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

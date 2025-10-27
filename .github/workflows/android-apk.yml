@@ -1,0 +1,48 @@
+name: Build Android APK (Debug)
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Download Android project (PWABuilder)
+        run: |
+          URL="https://cookiegamemaster59-del.github.io/Blitzer.EE/"
+          curl -L "https://www.pwabuilder.com/api/android?site=${URL}" -o android-project.zip
+          unzip -q android-project.zip -d android_src
+      - name: Locate gradlew
+        id: locate
+        run: |
+          set -e
+          GRADLEW=$(cd android_src && find . -maxdepth 3 -name gradlew | head -n1)
+          if [ -z "$GRADLEW" ]; then echo "No gradlew found"; exit 1; fi
+          echo "gradlew_path=android_src/${GRADLEW#./}" >> $GITHUB_OUTPUT
+          echo "gradle_dir=android_src/$(dirname ${GRADLEW#./})" >> $GITHUB_OUTPUT
+      - name: Build debug APK
+        run: |
+          chmod +x "${{ steps.locate.outputs.gradle_dir }}/gradlew"
+          cd "${{ steps.locate.outputs.gradle_dir }}"
+          ./gradlew assembleDebug --no-daemon
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          APK=$(find . -path '*/outputs/apk/debug/*.apk' -type f | head -n1)
+          cp "$APK" "$GITHUB_WORKSPACE/out/blitzer-ee-android.apk"
+      - name: Create GitHub Release (Android APK)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-${{ github.run_id }}
+          name: Android APK ${{ github.run_id }}
+          draft: false
+          prerelease: false
+          files: |
+            out/blitzer-ee-android.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
